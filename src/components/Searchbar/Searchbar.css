@@ -1,0 +1,17 @@
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  color: hsl(0, 0%, 35%);
+  cursor: pointer;
+}
+
+.input-wrapper {
+  padding: 0.5em;
+  padding-right: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background-color: var(--verylightgray_bg);
+  border: 1px solid hsla(0, 0%, 10%, 0.104);
+  border-radius: 3px;
+}
