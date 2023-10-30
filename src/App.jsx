@@ -6,29 +6,32 @@ import "./App.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
-async function getAllCountries() {
-  try {
-    const response = await fetch("https://restcountries.com/v3.1/all");
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-
 export default function App() {
   const [countries, setCountries] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    getAllCountries()
-      .then((data) => setCountries(data))
-      .catch((error) => console.error(error));
+  useEffect(function () {
+    async function getAllCountries() {
+      try {
+        const response = await fetch("https://restcountries.com/v3.1/all");
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+
+        setCountries(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+    getAllCountries();
   }, []);
+
+  const filteredCountries = countries.filter((country) =>
+    country.name.common.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="flex-container">
@@ -37,12 +40,12 @@ export default function App() {
       </div>
 
       <div className="nav-bar">
-        <Searchbar countries={countries} onSetCountries={setCountries} />
+        <Searchbar searchTerm={searchTerm} onSearchTearm={setSearchTerm} />
         <Filter />
       </div>
 
       <div className="countries-grid">
-        {countries.map((country) => (
+        {filteredCountries.map((country) => (
           <Country
             key={country.name.official}
             name={country.name.common}

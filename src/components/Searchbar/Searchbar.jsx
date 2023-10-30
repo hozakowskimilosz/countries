@@ -1,19 +1,8 @@
 import "./Searchbar.css";
 
-import { useState } from "react";
 import PropTypes from "prop-types";
 
-export default function Searchbar({ countries, onSetCountries }) {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  function handleFilter() {
-    const filteredCountries = countries.filter((country) =>
-      country.name.common.toLowerCase().startsWith(searchTerm.toLowerCase())
-    );
-
-    onSetCountries(filteredCountries);
-  }
-
+export default function Searchbar({ searchTerm, onSearchTearm }) {
   return (
     <div className="input-wrapper">
       <span className="material-symbols-outlined" tabIndex="0">
@@ -28,16 +17,13 @@ export default function Searchbar({ countries, onSetCountries }) {
         maxLength="35"
         tabIndex="0"
         value={searchTerm}
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-          handleFilter();
-        }}
+        onChange={(e) => onSearchTearm(e.target.value)}
       />
     </div>
   );
 }
 
 Searchbar.propTypes = {
-  countries: PropTypes.array,
-  onSetCountries: PropTypes.func,
+  searchTerm: PropTypes.string,
+  onSearchTearm: PropTypes.func,
 };
